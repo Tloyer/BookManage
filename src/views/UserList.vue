@@ -67,7 +67,7 @@ export default {
         async submitAdd() {
             this.$refs.refAdd.validate(async (valid) => {
                 if (!valid) return;
-                let {data:res} = await this.$http.post("/dnd/user/register", {username:this.formAdd.username, password:this.formAdd.pw, roleId:this.formAdd.roleId});
+                let {data:res} = await this.$http.post("/book/user/register", {username:this.formAdd.username, password:this.formAdd.pw, roleId:this.formAdd.roleId});
                 if (res.code!==200) return this.$message.error(res.msg);
                 this.$message.success("新增用户成功！");
                 this.getList();
@@ -78,8 +78,8 @@ export default {
             this.$confirm("此操作将永久删除该用户。是否继续？", "提示", {
                 confirmButtonText:"确定", cancelButtonText:"取消", type:"warning",
             }).then(async () => {
-                const {data:res} = await this.$http.delete("/dnd/user/"+id);
-                if (res.code!=200) return this.$message.error(res.msg);
+                const {data:res} = await this.$http.delete("/book/user/"+id);
+                if (res.code!==200) return this.$message.error(res.msg);
                 this.getList();
                 this.$message.success("已删除。");
             }).catch(() => {

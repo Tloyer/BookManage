@@ -17,21 +17,21 @@
              :disabled="formDisable">
 
       <!--封面图片-->
-      <el-form-item label="试验图片" prop="image">
+<!--      <el-form-item label="试验图片" prop="image">
         <font v-if="this.pageStatus===1 && !bookDetail.image">无图片</font>
         <viewer>
           <img v-if="bookDetail.image" class="pic-area"
                :src="$http.defaults.baseURL + bookDetail.image" style="width: 60%;" />
         </viewer>
-        <upload button-txt="上传图片" v-if="$root.$data.canEdit&&!bookDetail.image" path="/dnd/"
+        <upload button-txt="上传图片" v-if="$root.$data.canEdit&&!bookDetail.image" path="/book/"
                 :urlPath="'//upload?id='+bookDetail.bookId +'&image='+bookDetail.image"
                 style="width: 60%;" @uploadSuccess="handleFileUploadSuccess">
         </upload>
-        <upload button-txt="更新图片" v-if="$root.$data.canEdit&&bookDetail.image" path="/dnd/"
+        <upload button-txt="更新图片" v-if="$root.$data.canEdit&&bookDetail.image" path="/book/"
                 :urlPath="'/d/upload?id=' + bookDetail.bookId +'&image='+bookDetail.image"
                 style="width: 60%;" @uploadSuccess="handleFileUploadSuccess">
         </upload>
-      </el-form-item>
+      </el-form-item>-->
 
       <el-form-item label="作 者" prop="author">
         <el-input v-model="bookDetail.author"></el-input>
@@ -80,7 +80,7 @@ export default {
         image: null,
         introduction: "这是一本科幻小说"
       }
-    };
+    }
   },
 
   methods: {

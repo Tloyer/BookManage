@@ -36,8 +36,8 @@ export default {
         async submitPw() {
             this.$refs.refPw.validate(async (valid) => {
                 if (!valid) return;
-                let {data:res} = await this.$http.post("/dnd/user/change-pw", {username:this.$root.$data.userStatus.userName, password:this.formPw.pw});
-                if (res.code!=200) return this.$message.error(res.msg);
+                let {data:res} = await this.$http.post("/book/user/change-pwd", {username:this.$root.$data.userStatus.userName, password:this.formPw.pw});
+                if (res.code!==200) return this.$message.error(res.msg);
                 this.$message.success("修改密码成功！");
                 this.$router.push("/home");
             });

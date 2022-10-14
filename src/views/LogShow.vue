@@ -58,14 +58,6 @@
             }
         },
         methods: {
-            /* 获取全部日志记录 */
-            async getInfoList() {
-                const { data: res } = await this.$http.get("/dnd/user/log/list");
-                if (res.code != 200) {
-                    return this.$message.error(res.msg);
-                }
-                this.infoList = res.data
-            },
             /* 删除指定日志记录 */
             deleteLogById(logId) {
                 this.$confirm('此操作将永久删除该日志信息, 是否继续?', '提示', {
@@ -74,7 +66,7 @@
                     type: 'warning'
                 }).then(async () => {
                     /* 从返回值(Promise)中结构出data字段值，重命名为res */
-                    const { data: res } = await this.$http.delete("/dnd/user/log/list/delete/" + logId);
+                    const { data: res } = await this.$http.delete("//user/log/list/delete/" + logId);
                     if (res.code !== 200) {
                         return this.$message.error(res.msg);
                     }
@@ -89,7 +81,7 @@
             /* 分页查询数据 */
             async getInfoListByPage() {
                 const { data: res } = await this.$http.get(
-                    "/dnd/user/log/listByPage?pageNum=" + this.page.pageNum + "&pageSize=" + this.page.pageSize
+                    "/book/user/log/listByPage?pageNum=" + this.page.pageNum + "&pageSize=" + this.page.pageSize
                 );
                 if (res.code != 200) {
                     return this.$message.error(res.msg);
@@ -108,8 +100,8 @@
             /* 导出全部日志数据到文件 */
             async exportTotalToExcel() {
                 // 重新获取全部数据
-                const { data: res } = await this.$http.get("/dnd/user/log/list");
-                if (res.code != 200) {
+                const { data: res } = await this.$http.get("/book/user/log/list");
+                if (res.code !== 200) {
                     return this.$message.error(res.msg);
                 }
                 if (!res.data || res.data.length < 1) {

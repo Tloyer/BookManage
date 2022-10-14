@@ -1,5 +1,6 @@
 <template>
   <div class="">
+    图书借阅管理
   </div>
 </template>
 
@@ -8,9 +9,14 @@ import bus from '../utils/eventBus'
 
 export default {
   data() {
+    return{
+
+    }
   },
 
-  methods: {},
+  methods: {
+
+  },
 
   created() {
   },
