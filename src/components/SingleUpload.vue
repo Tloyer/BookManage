@@ -1,4 +1,4 @@
-<template> 
+<template>
     <div>
         <!-- action必选参数，上传地址，bucket的外网访问域名 -->
         <el-upload :action="$http.defaults.baseURL+actionUrl" :multiple="false" 
