@@ -7,27 +7,14 @@
       </div>
       <div id="title">图书管理系统</div>
       <!-- 登录表单区域 -->
-      <el-form
-        :model="loginForm"
-        :rules="rules"
-        ref="loginFormRef"
-        label-width="0px"
-        class="login_form"
-      >
+      <el-form :model="loginForm" :rules="rules" ref="loginFormRef" label-width="0px" class="login_form">
         <!-- 用户名 -->
         <el-form-item prop="username">
-          <el-input
-            v-model="loginForm.username"
-            prefix-icon="iconfont icon-yonghu"
-          ></el-input>
+          <el-input v-model="loginForm.username" prefix-icon="iconfont icon-yonghu"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
-          <el-input
-            v-model="loginForm.password"
-            prefix-icon="iconfont icon-suo"
-            type="password"
-          ></el-input>
+          <el-input v-model="loginForm.password" prefix-icon="iconfont icon-suo" type="password"></el-input>
         </el-form-item>
         <!-- 登录和重置 -->
         <el-form-item class="btns">
@@ -44,35 +31,17 @@ export default {
   data() {
     return {
       loginForm: {
-        username: "",
-        password: "",
+        username: "admin",
+        password: "123456",
       },
       rules: {
         username: [
-          {
-            required: true,
-            message: "请输入用户名",
-            trigger: "blur",
-          },
-          {
-            min: 3,
-            max: 10,
-            message: "长度在3到10个字符",
-            trigger: "blur",
-          },
+          {required: true, message: "请输入用户名", trigger: "blur"},
+          {min: 3, max: 10, message: "长度在3到10个字符", trigger: "blur"}
         ],
         password: [
-          {
-            required: true,
-            message: "请输入密码",
-            trigger: "blur"
-          },
-          {
-            min: 6,
-            max: 16,
-            message: "长度在6到16个字符",
-            trigger: "blur",
-          },
+          {required: true, message: "请输入密码", trigger: "blur"},
+          {min: 6, max: 16, message: "长度在6到16个字符", trigger: "blur"}
         ],
       },
     };
@@ -87,7 +56,7 @@ export default {
           console.log("error submit!!");
           return false;
         } else {
-          let {data: res} = await this.$http.post("/book/user/login", this.loginForm);
+          const {data: res} = await this.$http.post("/book/user/login", this.loginForm);
           //登录失败
           if (res.code !== 200) {
             return this.$message.error(res.msg);

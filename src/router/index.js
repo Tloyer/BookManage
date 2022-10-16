@@ -30,7 +30,7 @@ const routes = [
         name: '图书列表'
       },
       {
-        path: '/detail/:bookId',
+        path: '/books/detail/:bookId',
         component: (resolve) => require(['@/views/BookDetail'], resolve)
       },
     ]

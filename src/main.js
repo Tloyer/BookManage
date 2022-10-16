@@ -6,6 +6,8 @@ import axios from 'axios'
 import qs from 'qs'
 import Video from 'video.js'
 import 'video.js/dist/video-js.css'
+//wjk 测试用mock
+import './mock/mock.js'
 
 Vue.prototype.$video = Video
 /* axios会将数据以json格式处理，qs能够将json数据转为x-www-urlencoded格式，也就是post请求携带表单数据 */
@@ -96,3 +98,4 @@ new Vue({
 
   render: h => h(App)
 }).$mount('#app')
+

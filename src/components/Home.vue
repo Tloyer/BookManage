@@ -146,7 +146,7 @@ export default {
     neDropdown(command) {
       switch (command) {
         case "pw":
-          this.$router.push("/user/pw");
+          this.$router.push("/user/pwd");
           break;
         case "list":
           this.$router.push("/user/list");
