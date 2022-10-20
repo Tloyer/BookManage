@@ -28,21 +28,21 @@
 
           <template v-if="!formDisable">
             <upload button-txt="上传图片" v-if="$root.$data.canEdit&&!bookDetail.image" path="/detail/"
-                    :urlPath="'/detail/upload?id='+bookDetail.bookId+'&image='+bookDetail.image"
+                    :urlPath="'/detail/upload?id='+bookId+'&image='+bookDetail.image"
                     style="width: 60%;" @uploadSuccess="handleFileUploadSuccess">
             </upload>
             <upload button-txt="更新图片" v-if="$root.$data.canEdit&&bookDetail.image" path="/detail/"
-                    :urlPath="'/detail/upload?id='+bookDetail.bookId+'&image='+bookDetail.image"
+                    :urlPath="'/detail/upload?id='+bookId+'&image='+bookDetail.image"
                     style="width: 60%;" @uploadSuccess="handleFileUploadSuccess">
             </upload>
           </template>
         </el-form-item>
       </el-row>
       <el-form-item label="书 名" prop="name">
-        <el-input v-model="bookDetail.name"></el-input>
+        <el-input v-model="bookDetail.bookName"></el-input>
       </el-form-item>
       <el-form-item label="作 者" prop="author">
-        <el-input v-model="bookDetail.author"></el-input>
+        <el-input v-model="bookDetail.bookAuthor"></el-input>
       </el-form-item>
       <el-form-item label="出版社" prop="publisher">
         <el-input v-model="bookDetail.publisher"></el-input>
@@ -75,6 +75,7 @@ Vue.use(Viewer);
 
 export default {
   components: {Upload: SingleUpload},
+
   data() {
     return {
       // 页面状态:0没有数据，1展示，2修改
@@ -102,7 +103,7 @@ export default {
       const {data: res} = await this.$http.get("/detail/" + this.bookId);
       if (res.code !== 200) {
         this.pageStatus = 0;
-        return;
+        return this.$message.error(res.msg);
       }
       this.pageStatus = 1;
       this.bookDetail = res.data;
@@ -129,17 +130,18 @@ export default {
       } else if (this.pageStatus === 2) {
         this.bookDetail.bookId = this.bookId;
         if (this.isExist) {//修改
-          const {data: res} = await this.$http.post("/detail/edit", this.bookDetail);
+          const {data: res} = await this.$http.post("/detail", this.bookDetail);
           if (res.code !== 200) {
             return this.$message.error(res.msg);
           }
           this.$message.success(res.msg);
         } else {//新增
-          const {data: res} = await this.$http.put("/detail/", this.bookDetail);
+          const {data: res} = await this.$http.put("/detail", this.bookDetail);
           if (res.code !== 200) {
             return this.$message.error(res.msg);
           }
           this.$message.success(res.msg);
+          this.isExist = true;
         }
         this.pageStatus = 1;
         this.formDisable = true;
@@ -148,10 +150,8 @@ export default {
     },
 
     handleFileUploadSuccess(imgPath) {
-      console.log(imgPath);
       this.bookDetail.image = imgPath;
       this.$message.success("图片上传成功");
-      //this.getBookDetail();
     },
   },
 
