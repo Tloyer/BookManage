@@ -47,7 +47,7 @@
           </div>
         </td>
         <td>
-          <template v-if="$root.canEdit">
+          <template v-if="$root.$data.canEdit">
             <el-tooltip class=item effect=dark content="修改书籍信息" placement=top :enterable="false">
               <el-button type=primary icon="el-icon-edit" size=mini @click="editBookOpen(item.bookId)">
               </el-button>
@@ -160,7 +160,7 @@ export default {
   methods: {
     async getBookList() {
       this.clearSearchParams();
-      this.getBookListByPage();
+      await this.getBookListByPage();
     },
 
     dialogAddBookClosed() {
@@ -172,9 +172,9 @@ export default {
         if (!valid) return;
         console.log(this.formAddBook);
         let {data: res} = await this.$http.put("/book/", this.formAddBook);
-        if (res.code != 200) return this.$message.error(res.msg);
+        if (res.code !== 200) return this.$message.error(res.msg);
         this.dialogAddBookOpened = false;
-        this.getBookList();
+        await this.getBookList();
         this.$message.success("新增书籍成功！");
       });
     },
@@ -199,7 +199,7 @@ export default {
           return this.$message.error(res.msg);
         }
         this.dialogEditBookOpened = false;
-        this.getBookList();
+        await this.getBookList();
         this.$message.success("修改书籍信息成功！");
       });
     },
@@ -223,9 +223,9 @@ export default {
       this.$confirm("借阅" + book.bookName + "?", "提示", {
         confirmButtonText: "确定", cancelButtonText: "取消", type: "success",
       }).then(async () => {
-        const {data: res} = await this.$http.post("/book/users/borrow/" + book.bookId);
-        if (res.code != 200) return this.$message.error(res.msg);
-        this.getBookList();
+        const {data: res} = await this.$http.post("/borrow/" + book.bookId);
+        if (res.code !== 200) return this.$message.error(res.msg);
+        await this.getBookList();
         this.$message.success("借阅成功");
       }).catch(() => {
         this.$message.info("已取消借阅");
@@ -238,7 +238,7 @@ export default {
         "/book/search?pageNum=" + this.page.pageNum + "&pageSize=" + this.page.pageSize,
         this.query
       );
-      if (res.code != 200) {
+      if (res.code !== 200) {
         return this.$message.error(res.msg);
       }
       this.page.total = res.data.total;//数据总条数
