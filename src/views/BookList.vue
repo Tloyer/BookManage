@@ -96,6 +96,7 @@
           <el-button type=primary @click="addBook">确 定</el-button>
       </span>
     </el-dialog>
+
     <el-dialog title="修改图书信息" :visible.sync="dialogEditBookOpened" width="40%" :close-on-click-modal="false">
       <el-form :model="formEditBook" :rules="formBookRules" ref="refEditBook" label-width="120px">
         <el-form-item label="书名" prop="bookName">
@@ -170,7 +171,7 @@ export default {
       this.$refs.refAddBook.validate(async (valid) => {
         if (!valid) return;
         console.log(this.formAddBook);
-        let {data: res} = await this.$http.post("/book/add/", this.formAddBook);
+        let {data: res} = await this.$http.put("/book/", this.formAddBook);
         if (res.code != 200) return this.$message.error(res.msg);
         this.dialogAddBookOpened = false;
         this.getBookList();
@@ -180,17 +181,23 @@ export default {
 
     async editBookOpen(id) {
       // 先查询
-      const {data: res} = await this.$http.get("/book/books/" + id);
-      if (res.code != 200) return this.$message.error(res.msg);
+      const {data: res} = await this.$http.get("/book/" + id);
+      if (res.code !== 200) {
+        return this.$message.error(res.msg);
+      }
       this.formEditBook = res.data;
       this.dialogEditBookOpened = true;
     },
 
     editBook() {
       this.$refs.refEditBook.validate(async (valid) => {
-        if (!valid) return;
-        let {data: res} = await this.$http.put("/book/books/", this.formEditBook);
-        if (res.code != 200) return this.$message.error(res.msg);
+        if (!valid) {
+          return;
+        }
+        let {data: res} = await this.$http.post("/book/", this.formEditBook);
+        if (res.code !== 200) {
+          return this.$message.error(res.msg);
+        }
         this.dialogEditBookOpened = false;
         this.getBookList();
         this.$message.success("修改书籍信息成功！");
@@ -201,8 +208,10 @@ export default {
       this.$confirm("此操作将永久删除该书籍信息，是否继续？", "提示", {
         confirmButtonText: "确定", cancelButtonText: "取消", type: "warning",
       }).then(async () => {
-        const {data: res} = await this.$http.delete("/book/books/" + id);
-        if (res.code != 200) return this.$message.error(res.msg);
+        const {data: res} = await this.$http.delete("/book/" + id);
+        if (res.code !== 200) {
+          return this.$message.error(res.msg);
+        }
         this.getBookList();
         this.$message.success("删除成功");
       }).catch(() => {
