@@ -223,7 +223,10 @@ export default {
       this.$confirm("借阅" + book.bookName + "?", "提示", {
         confirmButtonText: "确定", cancelButtonText: "取消", type: "success",
       }).then(async () => {
-        const {data: res} = await this.$http.post("/borrow/" + book.bookId);
+        const {data: res} = await this.$http.post("/borrow",{
+					userId:this.$root.$data.userStatus.userId,
+	        bookId:book.bookId
+        });
         if (res.code !== 200) return this.$message.error(res.msg);
         await this.getBookList();
         this.$message.success("借阅成功");
