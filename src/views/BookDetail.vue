@@ -22,9 +22,9 @@
 						<font v-if="this.pageStatus===1 && !bookDetail.image">无图片</font>
 						
 						<viewer>
-							<img v-if="bookDetail.image" class="pic-area" src="../assets/img/santi.png"
-							     style="width: 200px;"/>
-							<!--'../assets/img/background.jpg':src="$http.defaults.baseURL + bookDetail.image" -->
+							<img v-if="bookDetail.image" class="pic-area"
+							     :src="$http.defaults.baseURL + bookDetail.image" style="width: 200px;"/>
+							<!--'../assets/img/background.jpg' src="../assets/img/santi.png"-->
 						</viewer>
 						
 						<template v-if="!formDisable">
