@@ -1,7 +1,7 @@
 import {Mock,MockBaseUrl,regUrl} from "../mockBase"
 
 //获得书列表
-Mock.mock(regUrl(MockBaseUrl+'/book/books/getAll'), (config) => {
+Mock.mock(regUrl(MockBaseUrl+'/book/search'), (config) => {
 	console.log(config);
 	// 返回的数据
 	return Mock.mock({
@@ -22,7 +22,7 @@ Mock.mock(regUrl(MockBaseUrl+'/book/books/getAll'), (config) => {
 });
 
 //查询单个
-Mock.mock(regUrl(MockBaseUrl+'/book/books'), "get", (config) => {
+Mock.mock(regUrl(MockBaseUrl+'/book'), "get", (config) => {
 	console.log(config);
 	// 返回的数据
 	return Mock.mock({
@@ -38,7 +38,7 @@ Mock.mock(regUrl(MockBaseUrl+'/book/books'), "get", (config) => {
 	});
 });
 //修改单个
-Mock.mock(regUrl(MockBaseUrl+'/book/books'), "put", (config) => {
+Mock.mock(regUrl(MockBaseUrl+'/book'), "put", (config) => {
 	console.log(config);
 	// 返回的数据
 	return Mock.mock({
@@ -48,7 +48,7 @@ Mock.mock(regUrl(MockBaseUrl+'/book/books'), "put", (config) => {
 	});
 });
 //增加单个
-Mock.mock(regUrl(MockBaseUrl+'/book/books'), "post", (config) => {
+Mock.mock(regUrl(MockBaseUrl+'/book'), "post", (config) => {
 	console.log(config);
 	// 返回的数据
 	return Mock.mock({
@@ -58,7 +58,7 @@ Mock.mock(regUrl(MockBaseUrl+'/book/books'), "post", (config) => {
 	});
 });
 //删除单个
-Mock.mock(regUrl(MockBaseUrl+'/book/books'), "delete", (config) => {
+Mock.mock(regUrl(MockBaseUrl+'/book'), "delete", (config) => {
 	console.log(config);
 	// 返回的数据
 	return Mock.mock({
@@ -69,7 +69,7 @@ Mock.mock(regUrl(MockBaseUrl+'/book/books'), "delete", (config) => {
 });
 
 //借书
-Mock.mock(regUrl(MockBaseUrl+'/book/users/borrow'), "post", (config) => {
+Mock.mock(regUrl(MockBaseUrl+'/borrow'), "post", (config) => {
 	console.log(config);
 	// 返回的数据
 	return Mock.mock({
