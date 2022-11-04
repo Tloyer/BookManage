@@ -7,10 +7,10 @@
       <el-breadcrumb-item>图书列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-row>
-      <el-col span="2">
+      <el-col span=2>
         <el-button v-if="$root.$data.canEdit" type=primary @click="dialogAddBookOpened = true">新增</el-button>
       </el-col>
-      <el-col span="20">
+      <el-col span=20>
         <!--搜索-->
         <el-form :inline="true" :model="query" ref="refSearch" label-width="80px">
           <el-form-item label="书籍名称" prop="bookName">
@@ -21,6 +21,14 @@
           </el-form-item>
           <el-button type=success @click="searchByParams">搜索</el-button>
         </el-form>
+      </el-col>
+      <el-col span=2>
+        <template>
+          <upload button-txt="批量上传" v-if="$root.$data.canEdit" path="/book/"
+                  :urlPath="'/book/upload'"
+                  style="width: 60%;" @uploadSuccess="handleFileUploadSuccess">
+          </upload>
+        </template>
       </el-col>
     </el-row>
     <table v-if="bookList.length > 0" class="page-table full-width center">
@@ -121,8 +129,10 @@
 </template>
 
 <script>
+import SingleUpload from "@/components/SingleUpload";
 
 export default {
+  components: {Upload: SingleUpload},
   data() {
     return {
       dialogAddBookOpened: false,
@@ -223,9 +233,9 @@ export default {
       this.$confirm("借阅" + book.bookName + "?", "提示", {
         confirmButtonText: "确定", cancelButtonText: "取消", type: "success",
       }).then(async () => {
-        const {data: res} = await this.$http.post("/borrow",{
-					userId:this.$root.$data.userStatus.userId,
-	        bookId:book.bookId
+        const {data: res} = await this.$http.post("/borrow", {
+          userId: this.$root.$data.userStatus.userId,
+          bookId: book.bookId
         });
         if (res.code !== 200) return this.$message.error(res.msg);
         await this.getBookList();
@@ -275,7 +285,7 @@ export default {
       this.page.pageNum = 1;
       // 这里要等待此方法结果
       await this.getBookListByPage();
-      if (this.bookList.length == 0) {
+      if (this.bookList.length === 0) {
         this.$message.warning("没有符合条件的记录！");
         this.clearSearchParams();
         return this.getBookListByPage();
@@ -290,7 +300,12 @@ export default {
         page: this.page,
         query: this.query
       };
-    }
+    },
+
+    handleFileUploadSuccess() {
+      this.$message.success("上传成功");
+    },
+
   },
 
   created() {

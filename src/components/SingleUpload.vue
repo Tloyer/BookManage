@@ -15,7 +15,7 @@ export default {
 
   computed: {
     actionUrl() {
-      if (this.urlPath.indexOf("?") != -1) {
+      if (this.urlPath.indexOf("?") !== -1) {
         return this.urlPath + "&path=" + this.path;
       } else {
         return this.urlPath + "?path=" + this.path;
@@ -54,7 +54,7 @@ export default {
 
     handleUploadSuccess(res, file) {
       console.log("上传成功...res: ", res, file)
-      if (res.code != 200) {
+      if (res.code !== 200) {
         return this.$message.error(res.msg);
       }
       this.fileList.pop()
@@ -66,23 +66,22 @@ export default {
     beforeUpload(file) {
       let fileName = file.name;
       let index1 = fileName.lastIndexOf(".");
-      if (index1 == -1) {
+      if (index1 === -1) {
         this.$message.error("上传失败，请检查文件格式！ ");
         return false;
       }
       var type = fileName.substring(index1, fileName.length).toUpperCase();
-      if (type !== ".JPG" && type !== ".PNG") {
-        this.$message.error("只允许上传JPG或PNG图片");
+      if (type !== ".JPG" && type !== ".PNG" && type !== ".CSV") {
+        this.$message.error("文件格式错误");
         return false;
       }
       const isLt10M = file.size / 1024 / 1024 < 10;
       if (!isLt10M) {
-        this.$message.error('上传图片大小不能超过10MB哦!');
+        this.$message.error('文件大小不能超过10MB哦!');
         return false;
       }
     }
   }
-
 }
 </script>
 

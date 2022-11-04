@@ -59,7 +59,7 @@ const routes = [
         component: (resolve) => require(['@/views/PassWord'], resolve)
       },
       {
-        path: "userlist",
+        path: "list",
         component: (resolve) => require(['@/views/UserList'], resolve)
       },
     ]
