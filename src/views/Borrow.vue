@@ -16,28 +16,28 @@
       </el-form-item>
       <el-button type=success @click="searchByParams">搜索</el-button>
     </el-form>
-    <table v-if="borrowInfoList.length > 0" class="page-table full-width center">
-      <tr>
-        <th>序号</th>
-        <th>书名</th>
-        <th>借书时间</th>
-        <th>用户</th>
-        <th v-if="$root.$data.canEdit" style="width: 150px">操作</th>
-      </tr>
-      <tr v-for="(item, index) in borrowInfoList" :key="index + ''">
-        <td>{{ index + 1 }}</td>
-        <td>{{ item.bookName }}</td>
-        <td>{{ item.borrowTime | formatTime }}</td>
-        <td>{{ item.userName }}</td>
-        <td v-if="$root.$data.canEdit">
-          <el-tooltip class=item effect=dark content="归还书籍" placement=top :enterable="false">
-            <el-button type=primary size=mini @click="returnBook(item)">
+    <el-table v-if="borrowInfoList.length > 0" :data="borrowInfoList" border style="width: 100%">
+      <el-table-column label="序号" type="index" width="80"></el-table-column>
+      <el-table-column label="书名" prop="bookName"></el-table-column>
+      <el-table-column label="借书时间" prop="borrowTime">
+        <template #default="{ row }">
+          {{ row.borrowTime | formatTime }}
+        </template>
+      </el-table-column>
+      <el-table-column label="用户" prop="userName"></el-table-column>
+      
+      <!-- 操作列 -->
+      <el-table-column label="操作" v-if="$root.$data.canEdit" width="150">
+        <template #default="{ row }">
+          <el-tooltip class="item" effect="dark" content="归还书籍" placement="top" :enterable="false">
+            <el-button type="primary" size="mini" @click="returnBook(row)">
               归还
             </el-button>
           </el-tooltip>
-        </td>
-      </tr>
-    </table>
+        </template>
+      </el-table-column>
+    </el-table>
+
 
     <!-- 分页 -->
     <el-pagination v-if="borrowInfoList.length > 0" background @size-change="handleSizeChange"

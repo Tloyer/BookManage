@@ -3,7 +3,7 @@
     <div class="login_box">
       <!-- 头像区域 -->
       <div class="avatar_box">
-        <img src="../assets/img/logo.png" alt=""/>
+        <img src="../assets/img/logo.jpg" alt=""/>
       </div>
       <div id="title">图书管理系统</div>
       <!-- 登录表单区域 -->
@@ -139,5 +139,17 @@ export default {
   padding: 0 20px;
   bottom: 0;
   box-sizing: border-box;
+}
+
+.login_container {
+  background-image: url(../assets/img/background.jpg);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

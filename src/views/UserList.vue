@@ -5,18 +5,22 @@
     <el-breadcrumb-item>用户管理</el-breadcrumb-item>
 </el-breadcrumb>
 <el-button type=primary @click="dialogAddOpened=true">新增</el-button>
-<table class="page-table full-width center">
-    <tr><th>用户名</th><th>用户身份</th><th>操作</th></tr>
-    <tr v-for="user in users" :key="user.userId">
-        <td>{{user.userName}}</td>
-        <td>{{$root.$data.roles[user.roleId].n}}</td>
-        <td>
-            <el-tooltip v-if="user.userId!=$root.$data.userStatus.userId" class=item effect=dark content="删除用户" placement=top :enterable="false">
-                <el-button type=danger icon="el-icon-delete" size=mini @click="deleteUser(user.userId)"></el-button>
-            </el-tooltip>
-        </td>
-    </tr>
-</table>
+<el-table :data="users" border style="width: 100%">
+  <el-table-column label="用户名" prop="userName"></el-table-column>
+  <el-table-column label="用户身份">
+    <template #default="{ row }">
+      {{ $root.$data.roles[row.roleId].n }}
+    </template>
+  </el-table-column>
+  <el-table-column label="操作" width="150">
+    <template #default="{ row }">
+      <el-tooltip v-if="row.userId !== $root.$data.userStatus.userId" class="item" effect="dark" content="删除用户" placement="top" :enterable="false">
+        <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteUser(row.userId)"></el-button>
+      </el-tooltip>
+    </template>
+  </el-table-column>
+</el-table>
+
 <el-dialog title="新增用户" :visible.sync="dialogAddOpened" width="50%" :close-on-click-modal="false" @closed="dialogAddClosed">
     <el-form :model="formAdd" :rules="formAddRules" ref="refAdd" label-width="120px">
         <el-form-item label="用户名" prop="username"><el-input v-model="formAdd.username"></el-input></el-form-item>

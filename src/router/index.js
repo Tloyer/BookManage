@@ -85,6 +85,21 @@ const routes = [
       }
     ]
   },
+  {
+    path: "/aimanage",
+    hidden: true,
+    component: Home,
+    name: '大模型管理',
+    meta: {icon: 'fa fa-dog'},
+    children: [
+      {
+        path: '/aimanage',
+        hidden: true,
+        component: (resolve) => require(['@/views/AiManage'], resolve),
+        name: '大模型对话'
+      }
+    ]
+  },
 ]
 
 const router = new VueRouter({

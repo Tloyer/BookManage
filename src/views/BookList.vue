@@ -31,50 +31,36 @@
         </template>
       </el-col>
     </el-row>
-    <table v-if="bookList.length > 0" class="page-table full-width center">
-      <tr>
-        <th>序号</th>
-        <th>书名</th>
-        <th>作者</th>
-        <th>ISBN</th>
-        <th>库存</th>
-        <th style="width: 130px">详情</th>
-        <th style="width: 150px">操作</th>
-      </tr>
-      <tr v-for="(item, index) in bookList" :key="index + ''">
-        <td>{{ index + 1 }}</td>
-        <td>{{ item.bookName }}</td>
-        <td>{{ item.bookAuthor }}</td>
-        <td>{{ item.ISBN }}</td>
-        <td>{{ item.stock }}</td>
-        <td class="test-result">
-          <div>
-            <router-link @click.native="gotoResults()"
-                         :to="'/books/detail/' + item.bookId">书籍详情
-            </router-link>
-          </div>
-        </td>
-        <td>
+    <el-table v-if="bookList.length > 0" :data="bookList" border style="width: 100%">
+      <el-table-column label="序号" type="index" width="80"></el-table-column>
+      <el-table-column label="书名" prop="bookName"></el-table-column>
+      <el-table-column label="作者" prop="bookAuthor"></el-table-column>
+      <el-table-column label="ISBN" prop="ISBN"></el-table-column>
+      <el-table-column label="库存" prop="stock"></el-table-column>
+      <el-table-column label="详情" width="130">
+        <template #default="{ row }">
+          <router-link @click.native="gotoResults()" :to="'/books/detail/' + row.bookId">书籍详情</router-link>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="150">
+        <template #default="{ row }">
           <template v-if="$root.$data.canEdit">
-            <el-tooltip class=item effect=dark content="修改书籍信息" placement=top :enterable="false">
-              <el-button type=primary icon="el-icon-edit" size=mini @click="editBookOpen(item.bookId)">
-              </el-button>
+            <el-tooltip class="item" effect="dark" content="修改书籍信息" placement="top" :enterable="false">
+              <el-button type="primary" icon="el-icon-edit" size="mini" @click="editBookOpen(row.bookId)"></el-button>
             </el-tooltip>
-            <el-tooltip class=item effect=dark content="删除书籍" placement=top :enterable="false">
-              <el-button type=danger icon="el-icon-delete" size=mini @click="deleteBook(item.bookId)">
-              </el-button>
+            <el-tooltip class="item" effect="dark" content="删除书籍" placement="top" :enterable="false">
+              <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteBook(row.bookId)"></el-button>
             </el-tooltip>
           </template>
           <template v-else>
-            <el-tooltip class=item effect=dark content="修改书籍信息" placement=top :enterable="false">
-              <el-button type=primary size=mini @click="borrowBook(item)">
-                借阅
-              </el-button>
+            <el-tooltip class="item" effect="dark" content="借阅书籍" placement="top" :enterable="false">
+              <el-button type="primary" size="mini" @click="borrowBook(row)">借阅</el-button>
             </el-tooltip>
           </template>
-        </td>
-      </tr>
-    </table>
+        </template>
+      </el-table-column>
+    </el-table>
+
     <!-- 分页 -->
     <el-pagination v-if="bookList.length > 0" background @size-change="handleSizeChange"
                    @current-change="handleCurrentChange"

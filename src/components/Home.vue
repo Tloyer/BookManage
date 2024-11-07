@@ -6,7 +6,7 @@
       <div>
         <!-- 头像 -->
         <img
-          src="../assets/img/logo.png"
+          src="../assets/img/logo.jpg"
           style="width: 50px; height: 50px;"
         />
         <span>图书管理系统</span>
@@ -80,7 +80,7 @@
         </el-main>
 
         <el-footer>
-          <span>Copyright © 2022 BIT</span>
+          <span>Copyright © 2024 BIT</span>
         </el-footer>
 
       </el-container>
